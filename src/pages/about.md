@@ -1,22 +1,24 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "About"
+title: "소개"
 ---
 
-**곁(gyeot)** 은 사람을 직접 돕는 분들 — 상담사, 사회복지사, 임상가 — 의 곁에 머무르며 도구를 만드는 작은 작업실입니다.
+**곁(gyeot)** 은 사람을 돕는 기술을 만드는 작은 작업실입니다.
 
-10년차 소프트웨어 엔지니어가 컴퓨터공학·심리학·신경과학·사회복지·신학을 가로지르며 던져온 한 가지 질문 — *사람의 변화를 어떻게 가능하게 할 것인가* — 을 코드와 글로 풀어갑니다.
-
-행정과 기록에 빼앗기는 시간을 돌려드려, 본업인 '치료적 만남'에 더 머무를 수 있게 하는 것이 목표입니다.
-
-협업·인터뷰·아이디어 교환 환영합니다. <gyeotstudio@gmail.com>
+상담사, 사회복지사, 임상가 — 사람을 직접 만나는 분들이 행정과 기록에 빼앗기는 시간을 줄여, 치료적 만남에 더 오래 머무를 수 있도록 도구를 만들고 글을 씁니다.
 
 ---
 
-**gyeot** (곁) is a Korean word for *being beside someone* — and a small workshop building tools for the people who do the hardest human work: counselors, social workers, clinicians.
+기술이 사람을 대신할 수는 없습니다. 하지만 기술은 사람이 사람과 함께할 수 있는 시간을 지킬 수 있습니다. 반복 업무를 줄이고, 기록을 간소화하고, 정보를 제때 전달해서 — 현장의 에너지가 정작 중요한 곳에 쓰일 수 있도록.
 
-A decade as a software engineer, threaded through computer science, psychology, neuroscience, social welfare, and theology — all circling the same question: *how does meaningful human change actually happen?*
+10년차 소프트웨어 엔지니어가 컴퓨터공학·심리학·신경과학·사회복지·신학을 가로지르며 붙들어온 질문 — *사람의 변화를 어떻게 가능하게 할 것인가* — 을 코드와 글로 풀어갑니다.
 
-The goal is to give practitioners back the time they lose to paperwork — so they can stay with the therapeutic encounter itself.
+---
 
-Open to collaboration, interviews, and quiet conversation.
+협업·인터뷰·아이디어 교환은 언제든 환영합니다.
+
+<gyeotstudio@gmail.com>
+
+---
+
+*gyeot(곁)은 한국어로 '곁에 있다', '옆에 머무르다'는 뜻입니다.*

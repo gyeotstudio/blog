@@ -12,8 +12,17 @@ import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 
-const posts = await getCollection("blog");
+const HERO = {
+  eyebrow: "소프트웨어 엔지니어 · 작업실",
+  name: "곁 · gyeot",
+  tagline: "사람을 돕는 분들 곁에 머무르며 도구를 만듭니다",
+  description: `심리·사회복지 현장의 상담사, 사회복지사, 임상가가\n행정과 기록 대신 치료적 만남에 더 머무를 수 있도록.`,
+  tags: ["심리", "사회복지", "기술", "글쓰기"],
+  photo: "/assets/gyeot.jpg",
+  photoAlt: "gyeot studio",
+};
 
+const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
@@ -21,94 +30,246 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
 <Layout>
   <Header />
-  <main id="main-content" data-layout="index" class="app-layout">
-    <section id="hero" class:list={["pt-8 pb-6", "border-b border-border"]}>
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Mingalaba
-      </h1>
-      <a
-        target="_blank"
-        href="/rss.xml"
-        class="inline-block"
-        aria-label="rss feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
 
-      <p>
-        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
-        blog theme. This theme follows best practices and provides accessibility
-        out of the box. Light and dark mode are supported by default. Moreover,
-        additional color schemes can also be configured.
-      </p>
-      <p class="mt-2">
-        Read the blog posts or check
-        <LinkButton
-          class="underline decoration-dashed underline-offset-4 hover:text-accent"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton> for more info.
-      </p>
-      {
-        // only display if at least one social link is enabled
-        SOCIALS.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">Social Links:</div>
-            <Socials />
-          </div>
-        )
-      }
+  <main id="main-content" data-layout="index" class="app-layout">
+
+    <!-- ─── Hero ─────────────────────────────────────────── -->
+    <section
+      id="hero"
+      class="grid grid-cols-[1fr_auto] gap-8 items-start
+             border-b border-border pt-12 pb-10 sm:pt-16"
+    >
+      <!-- Left: text -->
+      <div>
+        <p class="eyebrow">{HERO.eyebrow}</p>
+
+        <h1 class="hero-name">{HERO.name}</h1>
+
+        <p class="hero-tagline">{HERO.tagline}</p>
+
+        <p class="hero-desc">{HERO.description}</p>
+
+        <!-- interest tags -->
+        <ul class="hero-tags" aria-label="topics">
+          {HERO.tags.map(tag => <li>{tag}</li>)}
+        </ul>
+
+        <!-- social links -->
+        {
+          SOCIALS.length > 0 && (
+            <div class="mt-5 flex items-center gap-2 flex-wrap">
+              <span class="text-xs text-muted">링크:</span>
+              <Socials />
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Right: photo -->
+      <div class="hero-photo-wrap">
+        <img
+          src={HERO.photo}
+          alt={HERO.photoAlt}
+          class="hero-photo"
+          width="140"
+          height="172"
+        />
+      </div>
     </section>
 
+    <!-- ─── Selected Works (featured) ────────────────────── -->
     {
       featuredPosts.length > 0 && (
         <section
           id="featured"
           class:list={[
-            "pt-12 pb-6",
+            "pt-10 pb-8",
             { "border-b border-border": recentPosts.length > 0 },
           ]}
         >
-          <h2 class="text-2xl font-semibold tracking-wide">Featured</h2>
-          <ul>
-            {featuredPosts.map(data => (
-              <Card variant="h3" {...data} />
+          <h2 class="section-label">주요 글</h2>
+          <ul class="featured-grid">
+            {featuredPosts.map((data, i) => (
+              <li class:list={["featured-card", { accent: i === 0 }]}>
+                <Card variant="h3" {...data} />
+              </li>
             ))}
           </ul>
         </section>
       )
     }
 
+    <!-- ─── Recent Posts ──────────────────────────────────── -->
     {
       recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
-          <ul>
+        <section id="recent-posts" class="pt-10 pb-8">
+          <div class="section-header">
+            <h2 class="section-label">최근 글</h2>
+            <LinkButton
+              href="/posts/"
+              class="see-all-link"
+            >
+              전체 글
+              <IconArrowRight class="inline-block rtl:-rotate-180" />
+            </LinkButton>
+          </div>
+          <ul class="posts-list">
             {recentPosts.map(
               (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
+                index < SITE.postPerIndex && (
+                  <li class="post-row">
+                    <Card variant="h3" {...data} />
+                  </li>
+                )
             )}
           </ul>
         </section>
       )
     }
 
-    <div class="my-8 text-center">
-      <LinkButton href="/posts/">
-        All Posts
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
-      </LinkButton>
-    </div>
   </main>
+
   <Footer />
 </Layout>
+
+<style>
+  /* ── Eyebrow ── */
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+ 
+  /* ── Hero name ── */
+  .hero-name {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.4rem;
+  }
+ 
+  /* ── Tagline ── */
+  .hero-tagline {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+ 
+  /* ── Description ── */
+  .hero-desc {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--color-text-muted);
+    max-width: 38ch;
+    margin-bottom: 1.25rem;
+  }
+ 
+  /* ── Tags ── */
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .hero-tags li {
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    background: var(--color-fill);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+  }
+ 
+  /* ── Photo ── */
+  .hero-photo-wrap {
+    flex-shrink: 0;
+  }
+  .hero-photo {
+    width: 140px;
+    height: 172px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+  }
+ 
+  /* ── Section label (eyebrow-style) ── */
+  .section-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+  }
+ 
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.25rem;
+  }
+ 
+  .see-all-link {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .see-all-link:hover {
+    color: var(--color-accent);
+  }
+ 
+  /* ── Featured grid ── */
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+ 
+  .featured-card {
+    border: 0.5px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    background: var(--color-card);
+  }
+ 
+  /* first featured card: dark accent */
+  .featured-card.accent {
+    background: var(--color-text-base);
+    border-color: transparent;
+    color: var(--color-fill);
+  }
+  .featured-card.accent :global(a),
+  .featured-card.accent :global(h3),
+  .featured-card.accent :global(p) {
+    color: inherit;
+  }
+ 
+  /* ── Recent posts list ── */
+  .posts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .post-row {
+    border-bottom: 0.5px solid var(--color-border);
+  }
+  .post-row:last-child {
+    border-bottom: none;
+  }
+</style>
 
 <script>
   document.addEventListener("astro:page-load", () => {
